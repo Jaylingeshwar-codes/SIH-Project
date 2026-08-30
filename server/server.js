@@ -8,12 +8,14 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
-const db = new sqlite3.Database("./database.db");
+const db = new sqlite3.Database(
+    path.join(__dirname, "..", "database.db")
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 db.serialize(() => {
     db.run(`
@@ -327,7 +329,7 @@ app.post("/api/logout", (req, res) => {
 app.get("/dashboard", (req, res) => {
 
     res.sendFile(
-        path.join(__dirname, "public", "dashboard.html")
+        path.join(__dirname, "..", "public", "dashboard.html")
     );
 });
 
